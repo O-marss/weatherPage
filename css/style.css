@@ -1,0 +1,98 @@
+*{
+  box-sizing: border-box;
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  color: #fff;
+}
+
+header{
+    min-height: 100vh;
+    background-image: url(../images/bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+#cityName{
+  font-size: 40px;
+}
+
+.weather-condition{
+  margin-top: -10px;
+}
+
+.sub-heading{
+  color: #dfdbdb;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.result{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#dayCondition{
+  width: 100px;
+  height: 100px;
+}
+
+.owl-nav {
+  position: absolute;
+  right: -90px;
+  top: 30%;
+}
+
+.owl-nav button{
+  margin-inline: 10px;
+}
+
+.owl-nav button span{
+  font-size: 30px !important;
+  display: block;
+  background-color: #0000003f !important;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+
+
+.owl-stage-outer{
+  padding-inline: 10px;
+}
+
+
+.owl-item:has(> .active-hour) { 
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  padding: 20px;
+}
+
+
+header::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.404);
+  z-index: 1;
+}
+
+
+.full-page-slide .owl-nav{
+  display: none;
+}
+
+#allDayDataContainer .owl-nav{
+  display: none;
+}
+
+.owl-carousel .owl-item img{
+  width: auto;
+}

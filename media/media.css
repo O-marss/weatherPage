@@ -1,0 +1,28 @@
+@media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
+    #cityName{
+        font-size: 75px;
+      }
+      
+      .sub-heading{
+        font-size: 20px;
+      }
+      
+      .result{
+        font-size: 25px;
+      }
+
+      #allDayDataContainer .owl-nav{
+        display: block;
+      }
+}
+
+@media (min-width: 992px) {
+
+}
+
+@media (min-width: 1200px) {
+
+}
