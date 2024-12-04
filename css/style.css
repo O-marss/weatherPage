@@ -1,42 +1,72 @@
-*{
+* {
   box-sizing: border-box;
 }
 
-body{
+body {
   margin: 0;
   padding: 0;
   color: #fff;
+  font-family: "Cuprum", sans-serif;
 }
 
-header{
-    min-height: 100vh;
-    background-image: url(../images/bg.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    position: relative;
+header {
+  min-height: 100vh;
+  background-image: url(../images/bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-#cityName{
-  font-size: 40px;
+header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.404);
+  z-index: 1;
 }
 
-.weather-condition{
-  margin-top: -10px;
+.temperature {
+  font-size: 80px;
 }
 
-.sub-heading{
+.weather-condition {
+  font-size: 25px;
+  margin-top: -20px;
+}
+
+.city-name {
+  font-size: 30px;
+}
+
+.country-name {
+  color: #dfdbdb;
+  font-size: 20px;
+}
+
+.date {
+  font-size: 18px;
+}
+
+.time {
+  font-size: 18px;
+}
+
+.sub-heading {
   color: #dfdbdb;
   font-size: 16px;
-  font-weight: normal;
+  font-weight: lighter;
 }
 
-.result{
+.result {
   font-size: 18px;
   font-weight: bold;
 }
 
-#dayCondition{
+#dayCondition {
   width: 100px;
   height: 100px;
 }
@@ -47,11 +77,11 @@ header{
   top: 30%;
 }
 
-.owl-nav button{
+.owl-nav button {
   margin-inline: 10px;
 }
 
-.owl-nav button span{
+.owl-nav button span {
   font-size: 30px !important;
   display: block;
   background-color: #0000003f !important;
@@ -60,39 +90,29 @@ header{
   width: 50px;
 }
 
-
-
-.owl-stage-outer{
+.owl-stage-outer {
   padding-inline: 10px;
 }
 
+.owl-item:has(> .active-hour) {
+  background-color: #0000003f !important;
 
-.owl-item:has(> .active-hour) { 
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   padding: 20px;
 }
 
-
-header::before{
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.404);
-  z-index: 1;
-}
-
-
-.full-page-slide .owl-nav{
+.full-page-slide .owl-nav {
   display: none;
 }
 
-#allDayDataContainer .owl-nav{
+#allDayDataContainer .owl-nav {
   display: none;
 }
 
-.owl-carousel .owl-item img{
+.owl-carousel .owl-item img {
   width: auto;
+}
+
+#dayTemp {
+  font-size: 50px;
 }
