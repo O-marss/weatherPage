@@ -7,15 +7,16 @@ body {
   padding: 0;
   color: #fff;
   font-family: "Cuprum", sans-serif;
+  overflow-x: hidden;
 }
 
 header {
-  min-height: 100vh;
   background-image: url(../images/bg.png);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   position: relative;
+  min-height: 100vh;
 }
 
 header::before {
@@ -29,8 +30,13 @@ header::before {
   z-index: 1;
 }
 
+.navbar-brand{
+  color: #fff;
+}
+
 .temperature {
-  font-size: 80px;
+  font-size: 60px;
+  font-family: "Archivo Black", sans-serif;
 }
 
 .weather-condition {
@@ -40,6 +46,7 @@ header::before {
 
 .city-name {
   font-size: 30px;
+  
 }
 
 .country-name {
@@ -55,6 +62,15 @@ header::before {
   font-size: 18px;
 }
 
+
+.day-weather-info{
+  background-color: #dfdbdb46;
+}
+
+.info img{
+  width: 33% !important;
+}
+
 .sub-heading {
   color: #dfdbdb;
   font-size: 16px;
@@ -62,7 +78,8 @@ header::before {
 }
 
 .result {
-  font-size: 18px;
+  font-size: 16px;
+  font-family: "Archivo Black", sans-serif;
   font-weight: bold;
 }
 
@@ -71,48 +88,81 @@ header::before {
   height: 100px;
 }
 
-.owl-nav {
-  position: absolute;
-  right: -90px;
-  top: 30%;
-}
-
-.owl-nav button {
-  margin-inline: 10px;
-}
-
-.owl-nav button span {
-  font-size: 30px !important;
-  display: block;
-  background-color: #0000003f !important;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-}
-
 .owl-stage-outer {
   padding-inline: 10px;
 }
 
 .owl-item:has(> .active-hour) {
   background-color: #0000003f !important;
-
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  padding: 20px;
 }
 
-.full-page-slide .owl-nav {
-  display: none;
+.full-page-slide > .owl-nav {
+  font-size: 18px;
 }
 
-#allDayDataContainer .owl-nav {
-  display: none;
+.full-page-slide > .owl-nav [aria-label="Next"]{
+  padding-right: 40px;
+  position: relative;
+  margin-left: 20px;
+}
+
+.full-page-slide > .owl-nav [aria-label="Previous"]{
+  padding-right: 40px;
+  position: relative;
+  margin-right: 20px;
+}
+
+.full-page-slide > .owl-nav [aria-label="Next"]::after{
+  content: 'Page';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.full-page-slide > .owl-nav [aria-label="Previous"]::after{
+  content: 'Page';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#allDayDataContainer > .owl-nav {
+  position: absolute;
+  top: -70px;
+  right: 0;
+  left: 0;
+  height: 100%;
+}
+
+.owl-nav button {
+  margin-inline: 10px;
+}
+
+#allDayDataContainer .owl-nav button span {
+  font-size: 30px !important;
+  display: block;
+  background-color: #cac7c73f !important;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
 }
 
 .owl-carousel .owl-item img {
   width: auto;
 }
 
-#dayTemp {
-  font-size: 50px;
+#allDayDataContainer .owl-nav {
+  display: none;
+}
+
+.each-hour{
+  padding: 20px 25px;
+}
+
+#hourTemp {
+  font-size: 40px;
+  font-family: "Archivo Black", sans-serif;
 }

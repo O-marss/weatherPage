@@ -2,27 +2,87 @@
 }
 
 @media (min-width: 768px) {
-    #cityName{
-        font-size: 50px;
-      }
-      
-      .sub-heading{
-        font-size: 20px;
-      }
-      
-      .result{
-        font-size: 25px;
-      }
+  .navbar-brand {
+    font-size: 40px;
+  }
+  .temperature {
+    font-size: 60px;
+  }
 
-      #allDayDataContainer .owl-nav{
-        display: block;
-      }
+  #cityName {
+    font-size: 50px;
+  }
+
+  .sub-heading {
+    font-size: 20px;
+  }
+
+  .info img {
+    width: auto !important;
+  }
 }
 
 @media (min-width: 992px) {
+  .temperature {
+    font-size: 80px;
+  }
 
+  .info {
+    width: 200px;
+    justify-self: center;
+  }
+
+  .info img {
+    width: auto !important;
+  }
+
+  .result {
+    font-size: 25px;
+  }
+
+  .full-page-slide > .owl-nav {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  .full-page-slide > .owl-nav [aria-label="Next"] {
+    position: absolute;
+    top: 50%;
+    right: -40px;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.377);
+    border-radius: 50%;
+    padding: 25px 40px;
+  }
+
+  .full-page-slide > .owl-nav [aria-label="Previous"] {
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    transform: translateY(-50%);
+    padding: 25px 40px;
+    background-color: rgba(0, 0, 0, 0.377);
+    border-radius: 50%;
+  }
+
+  .full-page-slide > .owl-nav [aria-label="Next"]::after {
+    content: "";
+  }
+
+  .full-page-slide > .owl-nav [aria-label="Previous"]::after {
+    content: "";
+  }
+
+  #allDayDataContainer .owl-nav {
+    display: block;
+  }
 }
 
 @media (min-width: 1200px) {
-
+  .result {
+    font-size: 20px;
+  }
 }
