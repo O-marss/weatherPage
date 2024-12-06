@@ -14,20 +14,30 @@ let dataVariabels = {
 
 let date;
 let time;
-
+let dayInfoContainer = document.getElementById("dayInfoContainer");
 let allDayDataContainer;
 let slideItem;
 let currentTime = ``;
-let dayInfoContainer = document.getElementById("dayInfoContainer");
+let cityNameInput = document.getElementById("cityNameInput");
+let search = document.getElementById("search");
+
+// ^=========================> Events <=======================& //
+window.onload = getWeather();
+
+search.addEventListener("click", function (e) {
+  $("#dayInfoContainer").trigger("destroy.owl.carousel");
+  getWeather(cityNameInput.value);
+  e.stopPropagation();
+  e.preventDefault();
+});
 
 // &=========================> Functions <=======================& //
-async function getWeather() {
+async function getWeather(city = "cairo") {
   try {
     let response = await fetch(
-      "https://api.weatherapi.com/v1/forecast.json?key=fce8cbf1c3744e6f8bd22436240212&q=makkah&days=3"
+      `https://api.weatherapi.com/v1/forecast.json?key=fce8cbf1c3744e6f8bd22436240212&q=${city}&days=3`
     );
     data = await response.json();
-    console.log(data);
     getFullDayWeather();
   } catch (error) {
     console.log(error);
@@ -37,14 +47,13 @@ async function getWeather() {
 function getFullDayWeather() {
   let slideContainer = ``;
   let nextDay = false;
-  let dayCounter = 0;
   for (let i = 0; i < 3; i++) {
     slideContainer += `
-   <div
+  <div
   class="container-fluid header-container position-relative z-1 d-flex flex-column justify-content-between align-items-between gap-5 gap-xxl-0"
 >
   <div class="row align-items-center">
-    <div class="col-12 col-md-6">
+    <div class="col-12 col-md-6 col-xl-5 col-xxl-6">
       <div>
         <div class="row">
           <div class="col-12">
@@ -100,9 +109,9 @@ function getFullDayWeather() {
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 p-xxl-5 mt-3 mt-md-0">
+    <div class="col-12 col-md-6 p-xxl-5 mt-3 mt-md-0 col-xl-7 col-xxl-6">
       <div class="p-xxl-5">
-        <div class="row gy-3 gy-xxl-0 day-weather-info rounded-4 p-xl-5 mx-auto">
+        <div class="row gy-4 gy-xxl-0 day-weather-info rounded-4 p-xl-4 p-xxl-5 mx-auto">
           <div class="col-6 p-xxl-4">
             <div
               class="humidity-container d-flex align-items-center gap-4 py-0   info"
@@ -162,7 +171,6 @@ function getFullDayWeather() {
       </div>
     </div>
   </div>
-
   <div
     id="allDayDataContainer"
     class="each-hour-carousel owl-carousel mt-5 pe-md-5"
@@ -170,9 +178,7 @@ function getFullDayWeather() {
     ${getAllHoursTemp(i)}
   </div>
 </div>
-
 `;
-
     if (i > 0) {
       nextDay = true;
     } else {
@@ -181,22 +187,20 @@ function getFullDayWeather() {
   }
 
   dayInfoContainer.innerHTML = slideContainer;
-  date = document.getElementById("date");
-  time = document.getElementById("time");
 
-  getAllDaysCarousel()
-
-  document.querySelector('[aria-label="Next"]').innerHTML = "Next";
-  document.querySelector('[aria-label="Previous"]').innerHTML = "Prev";
-  getAllHoursCarousel()
+  getAllDaysCarousel();
+  getAllHoursCarousel();
 
   if (nextDay == true) {
     time.classList.remove("d-none");
   }
 }
 
-function getAllDaysCarousel(){
-  $(".full-page-slide").owlCarousel({
+function getAllDaysCarousel() {
+  date = document.getElementById("date");
+  time = document.getElementById("time");
+
+  $("#dayInfoContainer").owlCarousel({
     loop: false,
     margin: 10,
     nav: true,
@@ -215,11 +219,17 @@ function getAllDaysCarousel(){
       },
     },
   });
+  document.querySelector(
+    '.full-page-slide > .owl-nav [aria-label="Next"]'
+  ).innerHTML = "Next";
+  document.querySelector(
+    '.full-page-slide > .owl-nav [aria-label="Previous"]'
+  ).innerHTML = "Prev";
 }
 
-function getAllHoursCarousel(){
-  var startIndex = $(".owl-carousel .active-hour").index();
-  $(".owl-carousel").owlCarousel({
+function getAllHoursCarousel() {
+  var startIndex = $(".each-hour-carousel .active-hour").index();
+  $(".each-hour-carousel").owlCarousel({
     loop: true,
     margin: 10,
     responsiveClass: true,
@@ -232,11 +242,11 @@ function getAllHoursCarousel(){
         nav: true,
       },
       600: {
-        items: 4,
+        items: 3,
         nav: false,
       },
       1000: {
-        items: 6,
+        items: 5,
         nav: true,
         loop: false,
       },
@@ -286,4 +296,6 @@ function getEachHour(date) {
   });
 }
 
-getWeather();
+function reset() {
+  cityNameInput.value = null;
+}
