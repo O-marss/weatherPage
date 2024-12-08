@@ -40,14 +40,6 @@
     font-size: 25px;
   }
 
-  .full-page-slide > .owl-nav > .owl-next::after {
-    content: "";
-  }
-
-  .full-page-slide > .owl-nav > .owl-prev::after {
-    content: "";
-  }
-
   #allDayDataContainer .owl-nav {
     display: block;
   }
