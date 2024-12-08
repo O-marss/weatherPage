@@ -28,28 +28,11 @@ let weatherVariabels = {
 };
 
 let bgVariabels = {
-  apiKey: "5s9IIt9eJCnJ8pjKgMjoApcuZ6SvP5IH3NlT92CIHn0",
-  baseUrl: "https://api.unsplash.com/search/photos",
+  apiKey: "qtUMSC4LrtnEbt-csy2-zJtt4V8CIpczZvA1zK-l5Hw",
+  baseUrl: "https://api.unsplash.com/photos/random/",
 };
 
-async function getCityBg() {
-  try {
-    const bgResponse = await fetch(
-      `${bgVariabels.baseUrl}?client_id=${
-        bgVariabels.apiKey
-      }&orientation=landscape&query=${getTimeOfDay()}`
-    );
-    bgData = await bgResponse.json();
-    setBg();
-  } catch (error) {
-    console.log(error);
-  }
-}
 
-function setBg() {
-  let randomNum = Math.floor(Math.random() * 10);
-  document.body.style.backgroundImage = `url(${bgData.results[randomNum].urls.full})`;
-}
 
 // ^=========================> Events <=======================& //
 window.onload = getWeather();
@@ -68,12 +51,33 @@ async function getWeather(city = "cairo") {
       `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
+    getCityBg(city);
     getFullDayWeather();
-    getCityBg();
     reset();
   } catch (error) {
     console.log(error);
   }
+}
+
+async function getCityBg(city = "cairo") {
+  try {
+    const bgResponse = await fetch(
+      `${bgVariabels.baseUrl}?client_id=${
+        bgVariabels.apiKey
+      }&orientation=landscape&query=${city} ${getTimeOfDay()}`
+    );
+    bgData = await bgResponse.json();
+    setBg();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function setBg(){
+  document.body.style.backgroundImage = `url(${bgData.urls.raw})`;
+  document.body.style.backgroundRepeat = "no-repeat";
+  document.body.style.backgroundPosition = "center";
+  document.body.style.backgroundSize = "cover";
 }
 
 function getFullDayWeather() {
