@@ -1,5 +1,6 @@
 //!
 let data;
+let bgData;
 
 let dataVariabels = {
   cityName: document.getElementById("cityName"),
@@ -12,21 +13,50 @@ let dataVariabels = {
   windSpeed: document.getElementById("windSpeed"),
 };
 
-let date;
-let time;
-let dayInfoContainer = document.getElementById("dayInfoContainer");
-let allDayDataContainer;
-let slideItem;
-let currentTime = ``;
-let cityNameInput = document.getElementById("cityNameInput");
-let search = document.getElementById("search");
+let htmlVariabels = {
+  date: ``,
+  time: ``,
+  dayInfoContainer: document.getElementById("dayInfoContainer"),
+  cityNameInput: document.getElementById("cityNameInput"),
+  search: document.getElementById("search"),
+};
+
+let weatherVariabels = {
+  apiKey: "fce8cbf1c3744e6f8bd22436240212",
+  baseUrl: "https://api.weatherapi.com/v1/forecast.json",
+  numberOfDays: 7,
+};
+
+let bgVariabels = {
+  apiKey: "5s9IIt9eJCnJ8pjKgMjoApcuZ6SvP5IH3NlT92CIHn0",
+  baseUrl: "https://api.unsplash.com/search/photos",
+};
+
+async function getCityBg() {
+  try {
+    const bgResponse = await fetch(
+      `${bgVariabels.baseUrl}?client_id=${
+        bgVariabels.apiKey
+      }&orientation=landscape&query=${getTimeOfDay()}`
+    );
+    bgData = await bgResponse.json();
+    setBg();
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function setBg() {
+  let randomNum = Math.floor(Math.random() * 10);
+  document.body.style.backgroundImage = `url(${bgData.results[randomNum].urls.full})`;
+}
 
 // ^=========================> Events <=======================& //
 window.onload = getWeather();
 
-search.addEventListener("click", function (e) {
-  $("#dayInfoContainer").trigger("destroy.owl.carousel");
-  getWeather(cityNameInput.value);
+htmlVariabels.search.addEventListener("click", function (e) {
+  $(".owl-carousel").trigger("destroy.owl.carousel");
+  getWeather(htmlVariabels.cityNameInput.value);
   e.stopPropagation();
   e.preventDefault();
 });
@@ -34,11 +64,13 @@ search.addEventListener("click", function (e) {
 // &=========================> Functions <=======================& //
 async function getWeather(city = "cairo") {
   try {
-    let response = await fetch(
-      `https://api.weatherapi.com/v1/forecast.json?key=fce8cbf1c3744e6f8bd22436240212&q=${city}&days=3`
+    const response = await fetch(
+      `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
     getFullDayWeather();
+    getCityBg();
+    reset();
   } catch (error) {
     console.log(error);
   }
@@ -47,10 +79,10 @@ async function getWeather(city = "cairo") {
 function getFullDayWeather() {
   let slideContainer = ``;
   let nextDay = false;
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < weatherVariabels.numberOfDays; i++) {
     slideContainer += `
   <div
-  class="container-fluid header-container position-relative z-1 d-flex flex-column justify-content-between align-items-between gap-5 gap-xxl-0"
+  class="container-fluid header-container position-relative z-1 d-flex flex-column justify-content-between align-items-between gap-5"
 >
   <div class="row align-items-center">
     <div class="col-12 col-md-6 col-xl-5 col-xxl-6">
@@ -173,7 +205,7 @@ function getFullDayWeather() {
   </div>
   <div
     id="allDayDataContainer"
-    class="each-hour-carousel owl-carousel mt-5 pe-md-5"
+    class="each-hour-carousel owl-carousel mt-5 "
   >
     ${getAllHoursTemp(i)}
   </div>
@@ -186,19 +218,19 @@ function getFullDayWeather() {
     }
   }
 
-  dayInfoContainer.innerHTML = slideContainer;
+  htmlVariabels.dayInfoContainer.innerHTML = slideContainer;
 
   getAllDaysCarousel();
   getAllHoursCarousel();
 
   if (nextDay == true) {
-    time.classList.remove("d-none");
+    htmlVariabels.time.classList.remove("d-none");
   }
 }
 
 function getAllDaysCarousel() {
-  date = document.getElementById("date");
-  time = document.getElementById("time");
+  htmlVariabels.date = document.getElementById("date");
+  htmlVariabels.time = document.getElementById("time");
 
   $("#dayInfoContainer").owlCarousel({
     loop: false,
@@ -207,6 +239,7 @@ function getAllDaysCarousel() {
     dots: false,
     mouseDrag: false,
     touchDrag: false,
+    items: weatherVariabels.numberOfDays,
     responsive: {
       0: {
         items: 1,
@@ -220,40 +253,39 @@ function getAllDaysCarousel() {
     },
   });
   document.querySelector(
-    '.full-page-slide > .owl-nav [aria-label="Next"]'
-  ).innerHTML = "Next";
+    '.full-page-slide > .owl-nav > .owl-next > [aria-label="Next"]'
+  ).innerHTML = "Next Day";
   document.querySelector(
-    '.full-page-slide > .owl-nav [aria-label="Previous"]'
-  ).innerHTML = "Prev";
+    '.full-page-slide > .owl-nav > .owl-prev > [aria-label="Previous"]'
+  ).innerHTML = "Prev Day";
 }
 
 function getAllHoursCarousel() {
   var startIndex = $(".each-hour-carousel .active-hour").index();
   $(".each-hour-carousel").owlCarousel({
-    loop: true,
+    loop: false,
     margin: 10,
     responsiveClass: true,
-    items: 4,
     startPosition: startIndex,
     dots: false,
     responsive: {
       0: {
-        items: 1,
-        nav: true,
-      },
-      600: {
-        items: 3,
+        items: 2,
         nav: false,
       },
-      1000: {
-        items: 5,
+      768: {
+        items: 4,
         nav: true,
-        loop: false,
+      },
+      1200: {
+        items: 6,
+        nav: true,
       },
     },
   });
 }
 
+let currentTime = ``;
 function getAllHoursTemp(index) {
   let allDayData = ``;
 
@@ -274,10 +306,10 @@ function getAllHoursTemp(index) {
               <p class="each-hour text-start fw-lighter mb-0">${getEachHour(
                 data.forecast.forecastday[index].hour[i].time
               )}</p>
-              <img id="hourCondition" class="align-self-center pe-2" src=${
-                data.forecast.forecastday[index].hour[i].condition.icon
-              }>
           </div>
+           <img id="hourCondition" class="align-self-center pe-2" src=${
+             data.forecast.forecastday[index].hour[i].condition.icon
+           }>
           <p id="hourTemp" class="fw-bold mt-3 align-self-center">${
             data.forecast.forecastday[index].hour[i].temp_c
           }${" °C"}</p>
@@ -294,6 +326,19 @@ function getEachHour(date) {
   return d.toLocaleString([], {
     hour: "2-digit",
   });
+}
+
+function getTimeOfDay() {
+  let hour = moment(data.location.localtime).format("H");
+  if (hour >= 5 && hour < 12) {
+    return "Morning";
+  } else if (hour === 12) {
+    return "Noon";
+  } else if (hour > 12 && hour < 17) {
+    return "Afternoon";
+  } else {
+    return "Night";
+  }
 }
 
 function reset() {

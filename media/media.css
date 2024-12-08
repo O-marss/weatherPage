@@ -24,7 +24,7 @@
 
 @media (min-width: 992px) {
   .temperature {
-    font-size: 80px;
+    font-size: 70px;
   }
 
   .info {
@@ -40,39 +40,11 @@
     font-size: 25px;
   }
 
-  .full-page-slide > .owl-nav {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    left: 0;
-    transform: translateY(-50%);
-  }
-
-  .full-page-slide > .owl-nav [aria-label="Next"] {
-    position: absolute;
-    top: 50%;
-    right: -40px;
-    transform: translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.377);
-    border-radius: 50%;
-    padding: 25px 40px;
-  }
-
-  .full-page-slide > .owl-nav [aria-label="Previous"] {
-    position: absolute;
-    top: 50%;
-    left: -40px;
-    transform: translateY(-50%);
-    padding: 25px 40px;
-    background-color: rgba(0, 0, 0, 0.377);
-    border-radius: 50%;
-  }
-
-  .full-page-slide > .owl-nav [aria-label="Next"]::after {
+  .full-page-slide > .owl-nav > .owl-next::after {
     content: "";
   }
 
-  .full-page-slide > .owl-nav [aria-label="Previous"]::after {
+  .full-page-slide > .owl-nav > .owl-prev::after {
     content: "";
   }
 

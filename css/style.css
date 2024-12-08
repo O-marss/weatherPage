@@ -10,29 +10,29 @@ body {
   overflow-x: hidden;
 }
 
-header {
-  background-image: url(../images/bg.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+main {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: 100vh;
+  padding-block: 10px;
 }
 
-header::before {
+main::before {
   content: "";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.404);
+  background-color: rgba(0, 0, 0, 0.712);
   z-index: 1;
 }
 
 .navbar-brand {
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   font-family: "Racing Sans One", sans-serif;
 }
 
@@ -68,7 +68,7 @@ header::before {
 }
 
 .day-weather-info {
-  background-color: #dfdbdb46;
+  background-color: #59595c75;
 }
 
 .info img {
@@ -93,7 +93,7 @@ header::before {
 }
 
 .owl-item:has(> .active-hour) {
-  background-color: #0000003f !important;
+  background-color: #59595c3b !important;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
@@ -101,52 +101,48 @@ header::before {
   font-size: 18px;
 }
 
-.full-page-slide > .owl-nav [aria-label="Next"] {
+.full-page-slide > .owl-nav > .owl-next {
   padding-right: 40px;
   position: relative;
   margin-left: 20px;
 }
 
-.full-page-slide > .owl-nav [aria-label="Previous"] {
+.full-page-slide > .owl-nav > .owl-prev {
   padding-right: 40px;
   position: relative;
   margin-right: 20px;
 }
 
-.full-page-slide > .owl-nav [aria-label="Next"]::after {
-  content: "Page";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.full-page-slide > .owl-nav [aria-label="Previous"]::after {
-  content: "Page";
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
 #allDayDataContainer > .owl-nav {
   position: absolute;
-  top: -70px;
-  right: 0;
-  left: 0;
+  top: 50%;
+  right: 40px;
+  left: 40px;
+  transform: translateY(-50%);
 }
 
-.owl-nav button {
-  margin-inline: 10px;
+#allDayDataContainer > .owl-nav > .owl-next {
+  position: absolute;
+  top: 50%;
+  right: -60px;
+  transform: translateY(-50%);
+  background-color: #00000065;
+  border-radius: 30%;
+  padding: 25px 20px !important;
 }
 
-#allDayDataContainer .owl-nav button span {
-  font-size: 30px !important;
-  display: block;
-  background-color: #cac7c73f !important;
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
+#allDayDataContainer > .owl-nav > .owl-prev {
+  position: absolute;
+  top: 50%;
+  left: -60px;
+  transform: translateY(-50%);
+  padding: 25px 20px !important;
+  background-color: #00000065;
+  border-radius: 30%;
+}
+
+#allDayDataContainer .owl-stage-outer {
+  margin-left: 30px;
 }
 
 .owl-carousel .owl-item img {
@@ -162,6 +158,6 @@ header::before {
 }
 
 #hourTemp {
-  font-size: 40px;
+  font-size: 30px;
   font-family: "Archivo Black", sans-serif;
 }
