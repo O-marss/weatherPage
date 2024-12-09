@@ -10,7 +10,11 @@
   }
 
   #cityName {
-    font-size: 50px;
+    font-size: 80px;
+  }
+
+  .country-name {
+    font-size: 30px;
   }
 
   .sub-heading {
@@ -18,7 +22,10 @@
   }
 
   .info img {
-    width: auto !important;
+    width: 25% !important;
+  }
+  #allHourDataContainer > .owl-stage-outer{
+    padding-left: 5px;
   }
 }
 
@@ -32,15 +39,11 @@
     justify-self: center;
   }
 
-  .info img {
-    width: auto !important;
-  }
-
   .result {
     font-size: 25px;
   }
 
-  #allDayDataContainer .owl-nav {
+  #allHourDataContainer .owl-nav {
     display: block;
   }
 }

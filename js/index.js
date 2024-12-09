@@ -14,9 +14,13 @@ let dataVariabels = {
 };
 
 let htmlVariabels = {
+  header: document.getElementById('header'),
   date: ``,
   time: ``,
   dayInfoContainer: document.getElementById("dayInfoContainer"),
+  mainContent: document.getElementById("mainContent"),
+  allHourDataContainer: document.getElementById("allHourDataContainer"),
+  mainContent:``,
   cityNameInput: document.getElementById("cityNameInput"),
   search: document.getElementById("search"),
 };
@@ -28,7 +32,7 @@ let weatherVariabels = {
 };
 
 let bgVariabels = {
-  apiKey: "qtUMSC4LrtnEbt-csy2-zJtt4V8CIpczZvA1zK-l5Hw",
+  apiKey: "b8Pq6A0cY3npBWLQFRHopCm7XT93NhVzIlbflxZ_uaI",
   baseUrl: "https://api.unsplash.com/photos/random/",
 };
 
@@ -45,77 +49,53 @@ htmlVariabels.search.addEventListener("click", function (e) {
 });
 
 // &=========================> Functions <=======================& //
-async function getWeather(city = "cairo") {
+async function getWeather(city = "Zurich") {
   try {
     const response = await fetch(
       `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
-    getCityBg(city);
+    console.log(data);
+    
     getFullDayWeather();
+    getCityBg(city);
     reset();
+    console.log(city);
   } catch (error) {
     console.log(error);
   }
 }
 
-async function getCityBg(city = "cairo") {
+async function getCityBg(city = "Zurich") {
   try {
     const bgResponse = await fetch(
       `${bgVariabels.baseUrl}?client_id=${
         bgVariabels.apiKey
-      }&orientation=landscape&query=${city} ${getTimeOfDay()}`
+      }&orientation=landscape&query=$${getTimeOfDay()} nature views`
     );
     bgData = await bgResponse.json();
-    setBg();
+    setBg('.main-content')
   } catch (error) {
     console.log(error);
   }
 }
 
-function setBg(){
-  document.body.style.backgroundImage = `url(${bgData.urls.raw})`;
-  document.body.style.backgroundRepeat = "no-repeat";
-  document.body.style.backgroundPosition = "center";
-  document.body.style.backgroundSize = "cover";
-}
+
 
 function getFullDayWeather() {
   let slideContainer = ``;
   let nextDay = false;
   for (let i = 0; i < weatherVariabels.numberOfDays; i++) {
     slideContainer += `
-  <div
-  class="container-fluid header-container position-relative z-1 d-flex flex-column justify-content-between align-items-between gap-5"
+<div
+  class="container-fluid section-container position-relative z-1 d-flex flex-column justify-content-between align-items-between gap-5 mt-5 mx-0"
 >
-  <div class="row align-items-center">
-    <div class="col-12 col-md-6 col-xl-5 col-xxl-6">
+  <div id="mainContent" class="main-content row align-items-center gy-3 px-0 py-4 p-md-5">
+    <div class="col-12 col-md-6 position-relative z-1">
       <div>
         <div class="row">
           <div class="col-12">
             <div class="text-center">
-              <div
-                class="temp-container d-flex align-items-center justify-content-center mt-5"
-              >
-                <span
-                  id="temperature"
-                  class="temperature text-capitalize fa-4x fw-bold"
-                  >${data.forecast.forecastday[i].day.avgtemp_c} °C</span
-                >
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12">
-            <div class="weather-condition text-center">
-              <p id="weatherCondition" class="text-capitalize">
-                ${data.forecast.forecastday[i].day.condition.text}
-              </p>
-            </div>
-          </div>
-
-          <div class="col-12">
-            <div class="city text-center">
               <p id="cityName" class="city-name text-capitalize mb-0">
                 ${data.location.name}
               </p>
@@ -128,102 +108,131 @@ function getFullDayWeather() {
           <div class="col-12">
             <div class="date-container text-center mt-4">
               <span id="date" class="date"
-                >${moment(data.forecast.forecastday[i].date)
-                  .add(0, "days")
-                  .format("dddd, D MMMM yyyy")}</span
+                >${moment(data.forecast.forecastday[i].date) .add(0, "days")
+                .format("dddd, D MMMM yyyy")}</span
               >
             </div>
           </div>
 
           <div class="col-12">
-            <div class="time-container text-center">
+            <div class="time-container text-center mb-4">
               <p id="time" class="d-none time">
                 ${moment(data.location.localtime).format("LT")}
               </p>
             </div>
           </div>
+          <div class="col-12 col-xl-10 col-xxl-8 mx-auto">
+            <div>
+              <div class="row day-weather-info rounded-4 mx-auto">
+                <div class="col-6 p-2">
+                  <div
+                    class="humidity-container d-flex align-items-center gap-4 py-0 info"
+                  >
+                    <img src="svg/humidity.svg" alt="" />
+                    <div>
+                      <h3 class="sub-heading">Humidity</h3>
+                      <div id="humidity" class="result">
+                        ${data.forecast.forecastday[i].day.avghumidity} %
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 p-2">
+                  <div
+                    class="visibility-container d-flex align-items-center gap-4 py-0 info"
+                  >
+                    <img src="svg/vis2.svg" alt="" />
+                    <div>
+                      <h3 class="sub-heading">Visibility</h3>
+                      <div id="visibility" class="result">
+                        ${data.forecast.forecastday[i].day.avgvis_km} km
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6 p-2">
+                  <div
+                    class="rain-container d-flex align-items-center gap-4 py-0 info"
+                  >
+                    <img src="svg/rain.svg" alt="" />
+                    <div>
+                      <h3 class="sub-heading">Chance of Rain</h3>
+                      <div id="chanceOfRain" class="result">
+                        ${data.forecast.forecastday[i].day.daily_chance_of_rain}
+                        %
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-6 p-2">
+                  <div
+                    class="wind-speed-container d-flex align-items-center gap-4 py-0 info"
+                  >
+                    <img src="svg/wind-speed.svg" alt="" />
+                    <div>
+                      <h3 class="sub-heading">Wind Speed</h3>
+                      <div id="windSpeed" class="result">
+                        ${data.forecast.forecastday[i].day.maxwind_mph} mph
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-6 p-xxl-5 mt-3 mt-md-0 col-xl-7 col-xxl-6">
-      <div class="p-xxl-5">
-        <div class="row gy-4 gy-xxl-0 day-weather-info rounded-4 p-xl-4 p-xxl-5 mx-auto">
-          <div class="col-6 p-xxl-4">
-            <div
-              class="humidity-container d-flex align-items-center gap-4 py-0   info"
-            >
-              <img src="svg/humidity.svg" alt="" />
-              <div>
-                <h3 class="sub-heading">Humidity</h3>
-                <div id="humidity" class="result">
-                  ${data.forecast.forecastday[i].day.avghumidity} %
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-6 p-xxl-4">
-            <div
-              class="visibility-container d-flex align-items-center gap-4 py-0  info"
-            >
-              <img src="svg/vis2.svg" alt="" />
-              <div>
-                <h3 class="sub-heading">Visibility</h3>
-                <div id="visibility" class="result">
-                  ${data.forecast.forecastday[i].day.avgvis_km} km
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-6 p-xxl-4">
-            <div
-              class="rain-container d-flex align-items-center gap-4 py-0  info"
-            >
-              <img src="svg/rain.svg" alt="" />
-              <div>
-                <h3 class="sub-heading">Chance of Rain</h3>
-                <div id="chanceOfRain" class="result">
-                  ${data.forecast.forecastday[i].day.daily_chance_of_rain} %
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-6 p-xxl-4">
-            <div
-              class="wind-speed-container d-flex align-items-center gap-4 py-0  info"
-            >
-              <img src="svg/wind-speed.svg" alt="" />
-              <div>
-                <h3 class="sub-heading">Wind Speed</h3>
-                <div id="windSpeed" class="result">
-                  ${data.forecast.forecastday[i].day.maxwind_mph} mph
-                </div>
-              </div>
-            </div>
-          </div>
+    <div
+      id="mainCard"
+      class="col-8 col-md-4 col-lg-3 col-xxl-2 item d-flex flex-column justify-content-center gap-3 mx-auto px-3 pb-4 pt-0"
+    >
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-start align-items-center ms-2">
+          <p class="each-day text-start fw-lighter mb-0">
+            ${moment(data.forecast.forecastday[i].hour[i].time).format('dddd')}
+          </p>
         </div>
+        <img
+          id="hourlyIcon"
+          class="align-self-center"
+          src="${data.forecast.forecastday[i].hour[i].condition.icon}"
+        />
       </div>
+      <p id="temperature" class="temperature fw-bold align-self-center">
+        ${ Math.ceil(data.forecast.forecastday[i].hour[i].temp_c) }${" °C"}
+      </p>
+      
+      <div class="d-flex justify-content-center align-items-center gap-3"> 
+        <p class="fs-3 text-capitalize text-center m-0">
+        ${data.forecast.forecastday[i].day.maxtemp_c} °C
+      </p>
+      <span class="">-</span>
+      <p class="fs-3 text-capitalize text-center m-0">
+        ${data.forecast.forecastday[i].day.mintemp_c} °C
+      </p>
+      </div>
+      
     </div>
   </div>
-  <div
-    id="allDayDataContainer"
-    class="each-hour-carousel owl-carousel mt-5 "
-  >
+  <div id="allHourDataContainer" class="each-hour-carousel owl-carousel mt-5">
     ${getAllHoursTemp(i)}
   </div>
 </div>
+
 `;
+
     if (i > 0) {
       nextDay = true;
     } else {
       nextDay = false;
     }
-  }
+}
 
   htmlVariabels.dayInfoContainer.innerHTML = slideContainer;
-
   getAllDaysCarousel();
   getAllHoursCarousel();
 
@@ -236,7 +245,7 @@ function getAllDaysCarousel() {
   htmlVariabels.date = document.getElementById("date");
   htmlVariabels.time = document.getElementById("time");
 
-  $("#dayInfoContainer").owlCarousel({
+  $(".full-page-slide").owlCarousel({
     loop: false,
     margin: 10,
     nav: true,
@@ -274,15 +283,19 @@ function getAllHoursCarousel() {
     dots: false,
     responsive: {
       0: {
-        items: 2,
+        items: 1,
         nav: false,
       },
       768: {
-        items: 4,
+        items: 3,
         nav: true,
       },
       1200: {
-        items: 6,
+        items: 4,
+        nav: true,
+      },
+      1400: {
+        items: 5,
         nav: true,
       },
     },
@@ -302,23 +315,49 @@ function getAllHoursTemp(index) {
     } else {
       currentTime = ``;
     }
-
     allDayData += `
-        <div id="slideItem" class="item d-flex flex-column justify-content-center gap-3  ${currentTime}">
+      <div
+  id="slideItem"
+  class="item d-flex flex-column justify-content-center gap-3 ${currentTime} px-3"
+>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex justify-content-start align-items-center gap-2">
+      <p class="each-day text-start fw-lighter mb-0">
+        ${moment(data.forecast.forecastday[index].hour[i].time).format('ddd')}
+      </p>
+      <p class="each-hour text-start fw-lighter mb-0">
+        ${getEachHour( data.forecast.forecastday[index].hour[i].time )}
+      </p>
+    </div>
+    <img
+      id="hourlyIcon"
+      class="align-self-center"
+      src=${data.forecast.forecastday[index].hour[i].condition.icon}
+    />
+  </div>
+  <p id="hourTemp" class="fw-bold mt-3 align-self-center">
+    ${ Math.ceil(data.forecast.forecastday[index].hour[i].temp_c) }${" °C"}
+  </p>
 
-          <div class="d-flex justify-content-between align-items-center">
-              <p class="each-hour text-start fw-lighter mb-0">${getEachHour(
-                data.forecast.forecastday[index].hour[i].time
-              )}</p>
-          </div>
-           <img id="hourCondition" class="align-self-center pe-2" src=${
-             data.forecast.forecastday[index].hour[i].condition.icon
-           }>
-          <p id="hourTemp" class="fw-bold mt-3 align-self-center">${
-            data.forecast.forecastday[index].hour[i].temp_c
-          }${" °C"}</p>
-              
-        </div>
+  <div class="d-flex justify-content-center align-items-center gap-3">
+    <div class="d-flex align-items-center gap-3">
+      <img class="hourly-wind-img" src="svg/wind-speed.svg" alt="" />
+      <p class="hourly-results m-0">
+        ${data.forecast.forecastday[index].day.maxwind_mph} mph
+      </p>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+        <img class="hourly-rain-img" src="svg/rain.svg" alt="" />
+        <p class="hourly-results m-0">
+          ${data.forecast.forecastday[index].day.daily_chance_of_rain} %
+        </p>
+    </div>
+  </div>
+  <p class="hourly-condition text-capitalize text-center">
+    ${data.forecast.forecastday[index].day.condition.text}
+  </p>
+</div>
+
     `;
   }
   return allDayData;
@@ -343,6 +382,16 @@ function getTimeOfDay() {
   } else {
     return "Night";
   }
+}
+
+function setBg(className){
+  document.querySelectorAll(className).forEach(el => {
+    el.style.backgroundImage = `url(${bgData.urls.full})`;
+    el.style.backgroundRepeat = "no-repeat";
+    el.style.backgroundPosition = "center";
+    el.style.backgroundSize = "cover"; 
+});
+  
 }
 
 function reset() {

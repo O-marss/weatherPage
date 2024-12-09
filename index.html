@@ -40,10 +40,10 @@
     <link rel="stylesheet" href="media/media.css" />
   </head>
   <body>
-    <header class="position-relative">
-      <nav class="navbar bg-dark z-2 bg-opacity-75 p-md-0">
+    <header id="header" class="position-relative">
+      <nav class="navbar bg-dark z-2 p-md-0 fixed-top">
         <div class="container">
-          <a class="navbar-brand">WEATHER API</a>
+          <a class="navbar-brand">Daily Forecast</a>
           <form class="d-flex" role="search">
             <input
               id="cityNameInput"
@@ -58,12 +58,13 @@
           </form>
         </div>
       </nav>
+
     </header>
     <main id="mainContianer">
       <section>
         <div
         id="dayInfoContainer"
-        class="owl-carousel full-page-slide owl-theme container-fluid"
+        class="owl-carousel full-page-slide owl-theme container-fluid mt-5"
       ></div>
       </section>
     </main>
