@@ -2,10 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="description" content="a user-friendly interface that displays real-time weather information and forecasts for a specified location. It serves as a hub for users to check current conditions, plan activities, and stay updated on potential weather changes.">
+    <meta
+      name="description"
+      content="a user-friendly interface that displays real-time weather information and forecasts for a specified location. It serves as a hub for users to check current conditions, plan activities, and stay updated on potential weather changes."
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>DailyForecast</title>
-    <link rel="shortcut icon" type="image/x-icon" href="svg/weather-svgrepo.svg">
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="svg/weather-svgrepo.svg"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -41,7 +48,7 @@
   </head>
   <body>
     <header id="header" class="position-relative">
-      <nav class="navbar bg-dark z-2 p-md-0 fixed-top">
+      <nav class="navbar bg-dark z-2 p-md-2 fixed-top">
         <div class="container">
           <a class="navbar-brand">Daily Forecast</a>
           <form class="d-flex" role="search">
@@ -58,14 +65,13 @@
           </form>
         </div>
       </nav>
-
     </header>
     <main id="mainContianer">
       <section>
         <div
-        id="dayInfoContainer"
-        class="owl-carousel full-page-slide owl-theme container-fluid mt-5"
-      ></div>
+          id="dayInfoContainer"
+          class="owl-carousel full-page-slide owl-theme container-fluid mt-5"
+        ></div>
       </section>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

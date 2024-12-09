@@ -14,13 +14,13 @@ let dataVariabels = {
 };
 
 let htmlVariabels = {
-  header: document.getElementById('header'),
+  header: document.getElementById("header"),
   date: ``,
   time: ``,
   dayInfoContainer: document.getElementById("dayInfoContainer"),
   mainContent: document.getElementById("mainContent"),
   allHourDataContainer: document.getElementById("allHourDataContainer"),
-  mainContent:``,
+  mainContent: ``,
   cityNameInput: document.getElementById("cityNameInput"),
   search: document.getElementById("search"),
 };
@@ -32,11 +32,9 @@ let weatherVariabels = {
 };
 
 let bgVariabels = {
-  apiKey: "b8Pq6A0cY3npBWLQFRHopCm7XT93NhVzIlbflxZ_uaI",
+  apiKey: "yX41NOFjHQsrYpQWXgAkMGDc-j_FcJUrxmPsMnQ1LRk",
   baseUrl: "https://api.unsplash.com/photos/random/",
 };
-
-
 
 // ^=========================> Events <=======================& //
 window.onload = getWeather();
@@ -49,18 +47,17 @@ htmlVariabels.search.addEventListener("click", function (e) {
 });
 
 // &=========================> Functions <=======================& //
-async function getWeather(city = "Zurich") {
+async function getWeather(city = "tokyo") {
   try {
     const response = await fetch(
       `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
     console.log(data);
-    
+
     getFullDayWeather();
     getCityBg(city);
     reset();
-    console.log(city);
   } catch (error) {
     console.log(error);
   }
@@ -74,13 +71,11 @@ async function getCityBg(city = "Zurich") {
       }&orientation=landscape&query=$${getTimeOfDay()} nature views`
     );
     bgData = await bgResponse.json();
-    setBg('.main-content')
+    setBg(".main-content");
   } catch (error) {
     console.log(error);
   }
 }
-
-
 
 function getFullDayWeather() {
   let slideContainer = ``;
@@ -108,8 +103,9 @@ function getFullDayWeather() {
           <div class="col-12">
             <div class="date-container text-center mt-4">
               <span id="date" class="date"
-                >${moment(data.forecast.forecastday[i].date) .add(0, "days")
-                .format("dddd, D MMMM yyyy")}</span
+                >${moment(data.forecast.forecastday[i].date)
+                  .add(0, "days")
+                  .format("dddd, D MMMM yyyy")}</span
               >
             </div>
           </div>
@@ -193,7 +189,7 @@ function getFullDayWeather() {
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex justify-content-start align-items-center ms-2">
           <p class="each-day text-start fw-lighter mb-0">
-            ${moment(data.forecast.forecastday[i].hour[i].time).format('dddd')}
+            ${moment(data.forecast.forecastday[i].hour[i].time).format("dddd")}
           </p>
         </div>
         <img
@@ -203,7 +199,7 @@ function getFullDayWeather() {
         />
       </div>
       <p id="temperature" class="temperature fw-bold align-self-center">
-        ${ Math.ceil(data.forecast.forecastday[i].hour[i].temp_c) }${" °C"}
+        ${Math.ceil(data.forecast.forecastday[i].hour[i].temp_c)}${" °C"}
       </p>
       
       <div class="d-flex justify-content-center align-items-center gap-3"> 
@@ -230,7 +226,7 @@ function getFullDayWeather() {
     } else {
       nextDay = false;
     }
-}
+  }
 
   htmlVariabels.dayInfoContainer.innerHTML = slideContainer;
   getAllDaysCarousel();
@@ -323,10 +319,10 @@ function getAllHoursTemp(index) {
   <div class="d-flex justify-content-between align-items-center">
     <div class="d-flex justify-content-start align-items-center gap-2">
       <p class="each-day text-start fw-lighter mb-0">
-        ${moment(data.forecast.forecastday[index].hour[i].time).format('ddd')}
+        ${moment(data.forecast.forecastday[index].hour[i].time).format("ddd")}
       </p>
       <p class="each-hour text-start fw-lighter mb-0">
-        ${getEachHour( data.forecast.forecastday[index].hour[i].time )}
+        ${getEachHour(data.forecast.forecastday[index].hour[i].time)}
       </p>
     </div>
     <img
@@ -336,7 +332,7 @@ function getAllHoursTemp(index) {
     />
   </div>
   <p id="hourTemp" class="fw-bold mt-3 align-self-center">
-    ${ Math.ceil(data.forecast.forecastday[index].hour[i].temp_c) }${" °C"}
+    ${Math.ceil(data.forecast.forecastday[index].hour[i].temp_c)}${" °C"}
   </p>
 
   <div class="d-flex justify-content-center align-items-center gap-3">
@@ -384,14 +380,13 @@ function getTimeOfDay() {
   }
 }
 
-function setBg(className){
-  document.querySelectorAll(className).forEach(el => {
+function setBg(className) {
+  document.querySelectorAll(className).forEach((el) => {
     el.style.backgroundImage = `url(${bgData.urls.full})`;
     el.style.backgroundRepeat = "no-repeat";
     el.style.backgroundPosition = "center";
-    el.style.backgroundSize = "cover"; 
-});
-  
+    el.style.backgroundSize = "cover";
+  });
 }
 
 function reset() {

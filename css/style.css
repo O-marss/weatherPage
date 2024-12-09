@@ -19,7 +19,7 @@ main {
   padding-block: 10px;
 }
 
-#mainContent{
+#mainContent {
   position: relative;
   border-radius: 20px;
   min-height: 70vh;
@@ -37,7 +37,6 @@ main {
   z-index: 1;
 }
 
-
 .navbar-brand {
   color: #fff;
   font-size: 16px;
@@ -48,11 +47,10 @@ main {
   color: #fff;
 }
 
-
-#mainCard{
+#mainCard {
   position: relative;
   z-index: 1;
-  background: linear-gradient(317.63deg,#353589 -7.42%,#9a9aff 120.45%) ;
+  background: linear-gradient(317.63deg, #353589 -7.42%, #9a9aff 120.45%);
   border-radius: 30px;
 }
 
@@ -78,7 +76,7 @@ main {
 }
 
 .day-weather-info {
-  background-color:rgb(255 255 255/0.9);
+  background-color: rgb(255 255 255/0.9);
 }
 
 .info img {
@@ -100,7 +98,6 @@ main {
   font-family: "Archivo Black", sans-serif;
   font-weight: bold;
 }
-
 
 #dayInfoContainer > .owl-nav {
   position: relative;
@@ -131,7 +128,6 @@ main {
   background-color: #353589;
 }
 
-
 #allHourDataContainer > .owl-nav {
   position: absolute;
   top: 0;
@@ -144,8 +140,8 @@ main {
   top: -80px;
   right: 15%;
   background-color: #fff;
-  border: 1px solid #666 ;
-  color: #000 ;
+  border: 1px solid #666;
+  color: #000;
   border-radius: 50%;
   padding: 10px 20px !important;
 }
@@ -156,24 +152,24 @@ main {
   right: 20%;
   padding: 10px 20px !important;
   background-color: #fff;
-  border: 1px solid #666 ;
-  color: #000 ;
+  border: 1px solid #666;
+  color: #000;
   border-radius: 50%;
 }
 
 #allHourDataContainer > .owl-nav > .owl-next:hover {
-  background: linear-gradient(317.63deg,#353589 -7.42%,#9a9aff 120.45%) ;
-  border: 1px solid #666 ;
-  color: #fff ;
+  background: linear-gradient(317.63deg, #353589 -7.42%, #9a9aff 120.45%);
+  border: 1px solid #666;
+  color: #fff;
 }
 
 #allHourDataContainer > .owl-nav > .owl-prev:hover {
-  background: linear-gradient(317.63deg,#353589 -7.42%,#9a9aff 120.45%) ;
-  border: 1px solid #666 ;
-  color: #fff ;
+  background: linear-gradient(317.63deg, #353589 -7.42%, #9a9aff 120.45%);
+  border: 1px solid #666;
+  color: #fff;
 }
 
-.owl-carousel .owl-item #hourlyIcon{
+.owl-carousel .owl-item #hourlyIcon {
   width: auto;
 }
 
@@ -199,14 +195,17 @@ main {
   color: #353589;
 }
 
-.hourly-results,.hourly-condition{
+.hourly-results,
+.hourly-condition {
   font-size: 20px;
   color: #666;
 }
 
-.hourly-wind-img,.hourly-rain-img{
+.hourly-wind-img,
+.hourly-rain-img {
   width: 40px !important;
-  filter: invert(15%) sepia(15%) saturate(500%) hue-rotate(210deg) brightness(80%) contrast(100%);
+  filter: invert(15%) sepia(15%) saturate(500%) hue-rotate(210deg)
+    brightness(80%) contrast(100%);
 }
 
 #allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item {
@@ -215,22 +214,46 @@ main {
   margin-block: 10px;
 }
 
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover{
-  background: linear-gradient(317.63deg,#353589 -7.42%,#9a9aff 120.45%) ;
+#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover {
+  background: linear-gradient(317.63deg, #353589 -7.42%, #9a9aff 120.45%);
 }
 
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover #hourTemp,
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover .hourly-results,
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover .hourly-condition{
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:hover
+  #hourTemp,
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:hover
+  .hourly-results,
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:hover
+  .hourly-condition {
   color: #fff;
 }
 
-
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover .hourly-wind-img,
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover .hourly-rain-img{
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:hover
+  .hourly-wind-img,
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:hover
+  .hourly-rain-img {
   filter: invert(10%);
 }
 
-#allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:has(> .active-hour) {
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:has(> .active-hour) {
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
 }
