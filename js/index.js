@@ -1,5 +1,6 @@
 //!
 let data;
+let locationData;
 let bgData;
 
 let dataVariabels = {
@@ -26,7 +27,7 @@ let htmlVariabels = {
 };
 
 let weatherVariabels = {
-  apiKey: "fce8cbf1c3744e6f8bd22436240212",
+  apiKey: "42ba5fc6821b47cd846143717242112",
   baseUrl: "https://api.weatherapi.com/v1/forecast.json",
   numberOfDays: 7,
 };
@@ -37,7 +38,7 @@ let bgVariabels = {
 };
 
 // ^=========================> Events <=======================& //
-window.onload = getWeather();
+window.onload = getLocation();
 
 htmlVariabels.search.addEventListener("click", function (e) {
   $(".owl-carousel").trigger("destroy.owl.carousel");
@@ -47,14 +48,44 @@ htmlVariabels.search.addEventListener("click", function (e) {
 });
 
 // &=========================> Functions <=======================& //
+
+function getLocation(){
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        getUserCountry()
+      },
+      (error) => {
+        if (error.code === error.PERMISSION_DENIED) {
+          getWeather('tokyo')
+        } else {
+          console.log("An error occurred:", error.message);
+        }
+      }
+    );
+  } else{
+    alert("Geolocation is not supported by this browser")
+  }
+};
+
+async function getUserCountry(){
+  try{
+    let response = await fetch("https://ipapi.co/json/")
+    locationData = await response.json()  
+    console.log(locationData);
+      
+  }catch(error){
+    console.log(error);
+  }
+  getWeather(locationData.city) 
+}
+
 async function getWeather(city = "tokyo") {
   try {
     const response = await fetch(
       `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
-    console.log(data);
-
     getFullDayWeather();
     getCityBg(city);
     reset();
@@ -63,7 +94,7 @@ async function getWeather(city = "tokyo") {
   }
 }
 
-async function getCityBg(city = "Zurich") {
+async function getCityBg(city = "tokyo") {
   try {
     const bgResponse = await fetch(
       `${bgVariabels.baseUrl}?client_id=${

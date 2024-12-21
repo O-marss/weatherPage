@@ -209,13 +209,21 @@ main {
 }
 
 #allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item {
-  background-color: #f7f8fa !important;
+  background: -o-linear-gradient(315deg, #f7f8fa, #e1e3e6);
+  background: linear-gradient(135deg, #f7f8fa, #e1e3e6);
   border-radius: 10px;
   margin-block: 10px;
+  -webkit-transition: background 6s ease-in-out;
+  -o-transition: background 6s ease-in-out;
+  transition: background 6s ease-in-out 3s;
 }
 
 #allHourDataContainer > .owl-stage-outer > .owl-stage > .owl-item:hover {
-  background: linear-gradient(317.63deg, #353589 -7.42%, #9a9aff 120.45%);
+  background: -o-linear-gradient(132.37deg, #353589, #9a9aff);
+  background: linear-gradient(317deg, #353589, #9a9aff);
+  -webkit-transition: background 6s ease-in-out;
+  -o-transition: background 6s ease-in-out;
+  transition: background 6s ease-in-out 3s;
 }
 
 #allHourDataContainer
@@ -253,7 +261,13 @@ main {
   > .owl-stage-outer
   > .owl-stage
   > .owl-item:has(> .active-hour) {
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
-    rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
-    rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    background-image: linear-gradient(317.63deg, #353589 -7.42%, #9a9aff 120.45%);
+    color: #fff !important;
+}
+
+#allHourDataContainer
+  > .owl-stage-outer
+  > .owl-stage
+  > .owl-item:has(> .active-hour) *{
+    color: #fff !important;
 }

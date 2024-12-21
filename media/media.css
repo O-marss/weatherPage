@@ -24,9 +24,7 @@
   .info img {
     width: 25% !important;
   }
-  #allHourDataContainer > .owl-stage-outer {
-    padding-left: 5px;
-  }
+
 }
 
 @media (min-width: 992px) {
