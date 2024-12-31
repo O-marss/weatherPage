@@ -54,6 +54,8 @@ function getLocation(){
     navigator.geolocation.getCurrentPosition(
       (position) => {
         getUserCountry()
+        console.log(position);
+        
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
@@ -329,8 +331,8 @@ function getAllHoursCarousel() {
   });
 }
 
-let currentTime = ``;
 function getAllHoursTemp(index) {
+  let currentTime = ``;
   let allDayData = ``;
 
   for (let i = 0; i < 24; i++) {
