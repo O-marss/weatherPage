@@ -27,7 +27,7 @@ let htmlVariabels = {
 };
 
 let weatherVariabels = {
-  apiKey: "42ba5fc6821b47cd846143717242112",
+  apiKey: "6e58cedd22434823bd2150533252502",
   baseUrl: "https://api.weatherapi.com/v1/forecast.json",
   numberOfDays: 7,
 };
@@ -49,13 +49,11 @@ htmlVariabels.search.addEventListener("click", function (e) {
 
 // &=========================> Functions <=======================& //
 
-function getLocation(){
-  if(navigator.geolocation){
+function getLocation() {
+  if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         getUserCountry()
-        console.log(position);
-        
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
@@ -65,21 +63,21 @@ function getLocation(){
         }
       }
     );
-  } else{
+  } else {
     alert("Geolocation is not supported by this browser")
   }
 };
 
-async function getUserCountry(){
-  try{
+async function getUserCountry() {
+  try {
     let response = await fetch("https://ipapi.co/json/")
-    locationData = await response.json()  
+    locationData = await response.json()
     console.log(locationData);
-      
-  }catch(error){
+
+  } catch (error) {
     console.log(error);
   }
-  getWeather(locationData.city) 
+  getWeather(locationData.city)
 }
 
 async function getWeather(city = "tokyo") {
@@ -88,8 +86,8 @@ async function getWeather(city = "tokyo") {
       `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
-    getFullDayWeather();
     getCityBg(city);
+    getFullDayWeather();
     reset();
   } catch (error) {
     console.log(error);
@@ -99,8 +97,7 @@ async function getWeather(city = "tokyo") {
 async function getCityBg(city = "tokyo") {
   try {
     const bgResponse = await fetch(
-      `${bgVariabels.baseUrl}?client_id=${
-        bgVariabels.apiKey
+      `${bgVariabels.baseUrl}?client_id=${bgVariabels.apiKey
       }&orientation=landscape&query=$${getTimeOfDay()} nature views`
     );
     bgData = await bgResponse.json();
@@ -125,10 +122,10 @@ function getFullDayWeather() {
           <div class="col-12">
             <div class="text-center">
               <p id="cityName" class="city-name text-capitalize mb-0">
-                ${data.location.name}
+                ${data?.location.name}
               </p>
               <p class="country-name text-capitalize fw-normal mb-0 mt-0">
-                ${data.location.country}
+                ${data?.location.country}
               </p>
             </div>
           </div>
@@ -136,9 +133,9 @@ function getFullDayWeather() {
           <div class="col-12">
             <div class="date-container text-center mt-4">
               <span id="date" class="date"
-                >${moment(data.forecast.forecastday[i].date)
-                  .add(0, "days")
-                  .format("dddd, D MMMM yyyy")}</span
+                >${moment(data?.forecast?.forecastday[i].date)
+        .add(0, "days")
+        .format("dddd, D MMMM yyyy")}</span
               >
             </div>
           </div>
@@ -146,7 +143,7 @@ function getFullDayWeather() {
           <div class="col-12">
             <div class="time-container text-center mb-4">
               <p id="time" class="d-none time">
-                ${moment(data.location.localtime).format("LT")}
+                ${moment(data?.location.localtime).format("LT")}
               </p>
             </div>
           </div>
@@ -161,7 +158,7 @@ function getFullDayWeather() {
                     <div>
                       <h3 class="sub-heading">Humidity</h3>
                       <div id="humidity" class="result">
-                        ${data.forecast.forecastday[i].day.avghumidity} %
+                        ${data?.forecast.forecastday[i].day.avghumidity} %
                       </div>
                     </div>
                   </div>
@@ -174,7 +171,7 @@ function getFullDayWeather() {
                     <div>
                       <h3 class="sub-heading">Visibility</h3>
                       <div id="visibility" class="result">
-                        ${data.forecast.forecastday[i].day.avgvis_km} km
+                        ${data?.forecast.forecastday[i].day.avgvis_km} km
                       </div>
                     </div>
                   </div>
@@ -188,7 +185,7 @@ function getFullDayWeather() {
                     <div>
                       <h3 class="sub-heading">Chance of Rain</h3>
                       <div id="chanceOfRain" class="result">
-                        ${data.forecast.forecastday[i].day.daily_chance_of_rain}
+                        ${data?.forecast.forecastday[i].day.daily_chance_of_rain}
                         %
                       </div>
                     </div>
@@ -203,7 +200,7 @@ function getFullDayWeather() {
                     <div>
                       <h3 class="sub-heading">Wind Speed</h3>
                       <div id="windSpeed" class="result">
-                        ${data.forecast.forecastday[i].day.maxwind_mph} mph
+                        ${data?.forecast.forecastday[i].day.maxwind_mph} mph
                       </div>
                     </div>
                   </div>
@@ -222,26 +219,26 @@ function getFullDayWeather() {
       <div class="d-flex justify-content-between align-items-center">
         <div class="d-flex justify-content-start align-items-center ms-2">
           <p class="each-day text-start fw-lighter mb-0">
-            ${moment(data.forecast.forecastday[i].hour[i].time).format("dddd")}
+            ${moment(data?.forecast.forecastday[i].hour[i].time).format("dddd")}
           </p>
         </div>
         <img
           id="hourlyIcon"
           class="align-self-center"
-          src="${data.forecast.forecastday[i].hour[i].condition.icon}"
+          src="${data?.forecast.forecastday[i].hour[i].condition.icon}"
         />
       </div>
       <p id="temperature" class="temperature fw-bold align-self-center">
-        ${Math.ceil(data.forecast.forecastday[i].hour[i].temp_c)}${" °C"}
+        ${Math.ceil(data?.forecast.forecastday[i].hour[i].temp_c)}${" °C"}
       </p>
       
       <div class="d-flex justify-content-center align-items-center gap-3"> 
         <p class="fs-3 text-capitalize text-center m-0">
-        ${data.forecast.forecastday[i].day.maxtemp_c} °C
+        ${data?.forecast.forecastday[i].day.maxtemp_c} °C
       </p>
       <span class="">-</span>
       <p class="fs-3 text-capitalize text-center m-0">
-        ${data.forecast.forecastday[i].day.mintemp_c} °C
+        ${data?.forecast.forecastday[i].day.mintemp_c} °C
       </p>
       </div>
       
