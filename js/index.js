@@ -2,6 +2,7 @@
 let data;
 let locationData;
 let bgData;
+let ip;
 
 let dataVariabels = {
   cityName: document.getElementById("cityName"),
@@ -72,8 +73,7 @@ async function getUserCountry() {
   try {
     let response = await fetch("https://ipapi.co/json/")
     locationData = await response.json()
-    console.log(locationData);
-
+    ip = locationData.ip;
   } catch (error) {
     console.log(error);
   }
@@ -83,7 +83,7 @@ async function getUserCountry() {
 async function getWeather(city = "tokyo") {
   try {
     const response = await fetch(
-      `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
+      `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${ip}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
     getCityBg(city);
