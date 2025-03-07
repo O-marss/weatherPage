@@ -77,10 +77,10 @@ async function getUserCountry() {
   } catch (error) {
     console.log(error);
   }
-  getWeather(locationData.city)
+  getWeather(locationData.city, ip)
 }
 
-async function getWeather(city = "tokyo") {
+async function getWeather(city = "tokyo", ip = ('35.6764, 139.6500')) {
   try {
     const response = await fetch(
       `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${ip}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
