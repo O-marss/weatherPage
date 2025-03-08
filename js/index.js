@@ -2,7 +2,8 @@
 let data;
 let locationData;
 let bgData;
-let ip;
+let coordinates;
+let city;
 
 let dataVariabels = {
   cityName: document.getElementById("cityName"),
@@ -24,7 +25,7 @@ let htmlVariabels = {
   allHourDataContainer: document.getElementById("allHourDataContainer"),
   mainContent: ``,
   cityNameInput: document.getElementById("cityNameInput"),
-  search: document.getElementById("search"),
+  form: document.getElementById("form"),
 };
 
 let weatherVariabels = {
@@ -34,31 +35,68 @@ let weatherVariabels = {
 };
 
 let bgVariabels = {
-  apiKey: "yX41NOFjHQsrYpQWXgAkMGDc-j_FcJUrxmPsMnQ1LRk",
+  apiKey: "5s9IIt9eJCnJ8pjKgMjoApcuZ6SvP5IH3NlT92CIHn0",
   baseUrl: "https://api.unsplash.com/photos/random/",
 };
 
-// ^=========================> Events <=======================& //
-window.onload = getLocation();
+let locationParams = {
+  accessKey: `3b9713e8dc0819fef3ce3a7fae9bb782`,
+  baseUrl: `http://api.ipapi.com/api/161.185.160.93`
+}
 
-htmlVariabels.search.addEventListener("click", function (e) {
-  $(".owl-carousel").trigger("destroy.owl.carousel");
-  getWeather(htmlVariabels.cityNameInput.value);
-  e.stopPropagation();
+// ^=========================> Events <=======================& //
+
+htmlVariabels.form.addEventListener("submit", function (e) {
   e.preventDefault();
+  e.stopPropagation();
+
+  $(".owl-carousel").trigger("destroy.owl.carousel");
+
+  let cityName = htmlVariabels.cityNameInput.value;
+  getCoordinatesByCity(cityName);
+
+  htmlVariabels.cityNameInput.value = '';
+  coordinates = '';
 });
+
+window.onload = getLocation()
+
 
 // &=========================> Functions <=======================& //
 
+async function getCoordinatesByCity(city) {
+  try {
+    const response = await fetch(
+      `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${city}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
+    );
+    data = await response.json();
+    coordinates = `${data?.location.lat},${data?.location.lon}`
+    getWeather(cityName, coordinates);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function getUserCountry() {
+  try {
+    let response = await fetch(`http://ip-api.com/json/`)
+    locationData = await response.json()
+    coordinates = `${locationData.lat},${locationData.lon}`;
+    city = locationData.city
+    getWeather(city, coordinates)
+  } catch (error) {
+    console.log(error);
+  }
+}
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
-      (position) => {
+      () => {
         getUserCountry()
       },
       (error) => {
         if (error.code === error.PERMISSION_DENIED) {
-          getWeather('tokyo')
+          getWeather('tokyo', '35.6764, 139.6500')
         } else {
           console.log("An error occurred:", error.message);
         }
@@ -69,25 +107,14 @@ function getLocation() {
   }
 };
 
-async function getUserCountry() {
-  try {
-    let response = await fetch("https://ipapi.co/json/")
-    locationData = await response.json()
-    ip = locationData.ip;
-  } catch (error) {
-    console.log(error);
-  }
-  getWeather(locationData.city, ip)
-}
-
-async function getWeather(city = "tokyo", ip = ('35.6764, 139.6500')) {
+async function getWeather(city = "tokyo", coordinates = ('35.6764,139.6500')) {
   try {
     const response = await fetch(
-      `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${ip}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
+      `${weatherVariabels.baseUrl}?key=${weatherVariabels.apiKey}&q=${coordinates}&days=${weatherVariabels.numberOfDays}&aqi=no&alerts=no`
     );
     data = await response.json();
-    getCityBg(city);
     getFullDayWeather();
+    getCityBg(city);
     reset();
   } catch (error) {
     console.log(error);
@@ -222,11 +249,6 @@ function getFullDayWeather() {
             ${moment(data?.forecast.forecastday[i].hour[i].time).format("dddd")}
           </p>
         </div>
-        <img
-          id="hourlyIcon"
-          class="align-self-center"
-          src="${data?.forecast.forecastday[i].hour[i].condition.icon}"
-        />
       </div>
       <p id="temperature" class="temperature fw-bold align-self-center">
         ${Math.ceil(data?.forecast.forecastday[i].hour[i].temp_c)}${" °C"}
@@ -355,11 +377,6 @@ function getAllHoursTemp(index) {
         ${getEachHour(data.forecast.forecastday[index].hour[i].time)}
       </p>
     </div>
-    <img
-      id="hourlyIcon"
-      class="align-self-center"
-      src=${data.forecast.forecastday[index].hour[i].condition.icon}
-    />
   </div>
   <p id="hourTemp" class="fw-bold mt-3 align-self-center">
     ${Math.ceil(data.forecast.forecastday[index].hour[i].temp_c)}${" °C"}
